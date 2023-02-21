@@ -1,3 +1,5 @@
+#Найти сумму простых делителей числа.
+
 def prost(digit)
   for i in 2...digit do
     if digit%i == 0 
