@@ -24,9 +24,38 @@ def first_positive_index(arr)
   index
 end
 
+def min_el(array)
+  min = array[0]
+  for num in array
+    min = num if num < min
+  end
+  min
+end
 
-arr1 = [4, 7, -2, 10, -5, 3, -8]
+def first_positive_index(array)
+  index = nil
+  i = 0
+  while i < array.length
+    if array[i] > 0
+      index = i
+      break
+    end
+    i += 1
+  end
+  index
+end
 
-puts "Array : #{arr1}"
-puts min_el(arr1)
-puts first_positive_index(arr1)
+
+
+puts""
+path = gets.chomp
+file = File.open(path)
+array = file.readline.split(' ').map(&:to_i)
+puts array
+puts"Method 2: "
+met = gets.chomp
+if met == 1
+    then puts min_el(array)
+else
+    puts first_positive_index(array)
+end
