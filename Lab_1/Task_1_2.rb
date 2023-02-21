@@ -1,4 +1,4 @@
-puts "Hi, #{username}, favorite language?"
+puts "Hi, #{ARGV[0]}, which language do you like the most?"
 case STDIN.gets.chomp
 	when "ruby"
 		puts "Podliza"
