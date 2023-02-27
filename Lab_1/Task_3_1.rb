@@ -8,25 +8,12 @@
 #  аргументом должен быть написан адрес файла. Далее
 #  необходимо прочитать массив и выполнить метод.
 
-def min_el(arr)
-  min = arr[0]
-  for num in arr
+def min_el(array)
+  min = array[0]
+  for num in array
     min = num if num < min
   end
   min
-end
-
-def first_positive_index(arr)
-  index = nil
-  i = 0
-  while i < arr.length
-    if arr[i] > 0
-      index = i
-      break
-    end
-    i += 1
-  end
-  index
 end
 
 def min_el(array)
