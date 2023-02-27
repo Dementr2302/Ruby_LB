@@ -16,14 +16,6 @@ def min_el(array)
   min
 end
 
-def min_el(array)
-  min = array[0]
-  for num in array
-    min = num if num < min
-  end
-  min
-end
-
 def first_positive_index(array)
   index = nil
   i = 0
