@@ -31,15 +31,14 @@ end
 
 
 
-puts""
-path = gets.chomp
-file = File.open(path)
-array = file.readline.split(' ').map(&:to_i)
-puts array
-puts"Method 2: "
-met = gets.chomp
-if met == 1
-    then puts min_el(array)
-else
-    puts first_positive_index(array)
-end
+def vibor(num, file) 
+  mass = IO.read(file).split.map(&:to_i) 
+  case num
+    when "1"
+      return min_el(mass)
+    when "2"
+      return first_positive_index(mass)
+  end
+end 
+
+puts vibor(ARGV[0], ARGV[1])
