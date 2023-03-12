@@ -1,8 +1,10 @@
 require_relative 'Student_class.rb'
 
-student1 = Student.new(1, "Байрамов", "Дмитрий", father_name: "Дмитиревич", phone: "+7 924 209 16 11", telegram: "@dementr", email: "dmitr@mail.com", github: "dementr2302")
+student2 = Student.new({id:1, last_name:"Байрамов", first_name:"Дмитрий", father_name: "Дмитиревич", phone: "+7 928 260 48 86", telegram: "@dementr", email: "dementr@yandex.ru", github: "dementr2302"})
+puts student2.get_info
+
+student1 = Student.new({id:1, last_name:"Байрамов", first_name:"Дмитрий", father_name: "Дмитиревич",telegram: "dementr" })
 puts student1.get_info
 
-student2 = Student.new(2, "Байрамов", "Дмитрий", father_name: "Дмитиревич", phone: "+7 924 209 16 11", telegram: "@dementr", email: "dmitr@mail.com", github: "dementr2302")
-puts student2.get_info
+
 
