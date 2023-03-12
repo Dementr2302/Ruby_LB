@@ -9,6 +9,10 @@ class Student
     @telegram = telegram
     @email = email
     @github = github
+
+    if @phone
+      raise(ArgumentError, 'Номер телефона введен не верно.') unless Student.correct_phone?(@phone)
+    end
   end
   def get_info
     puts "Студент #{self.last_name} #{self.first_name} #{self.father_name}"
@@ -25,5 +29,10 @@ class Student
         puts "Github: #{self.github}"
       end
     end
+
+  PHONE_REGEX = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
+  def Student.correct_phone?(str)
+    str.match?(PHONE_REGEX)
+  end
 
 end
