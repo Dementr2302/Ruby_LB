@@ -74,13 +74,13 @@ class Student
   def github=(value)
     @github = value
   end
+
+  def get_info
+    puts "Студент #{self.last_name} #{self.first_name} #{self.father_name}"
+    puts "Telegram: #{self.telegram}"
+    puts "Телефон: #{self.phone}"
+    puts "Почта: #{self.email}"
+    puts "Github: #{self.github}"
+    end
+
 end
-
-
-student1 = Student.new(1, "Байрамов", "Дмитрий", "Дмитиревич", "+123456789", "@dementr", "dmitr@mail.com", "dementr2302")
-
-puts "Студент #{student1.last_name} #{student1.first_name} #{student1.father_name}, id: #{student1.id}"
-puts "Telegram: #{student1.telegram}" if student1.telegram
-puts "Телефон: #{student1.phone}" if student1.phone
-puts "Почта: #{student1.email}" if student1.email
-puts "Github: #{student1.github}" if student1.github
