@@ -5,3 +5,4 @@ student2 = Student.new(1, "Байрамов", "Дмитрий", "Дмитире�
 
 puts student1.get_info
 puts student2.get_info
+
