@@ -8,7 +8,7 @@ class Student
     @phone = args[:phone]
     @telegram = args[:telegram]
     @email = args[:email]
-    @git = args[:git]
+    @github = args[:github]
 
     validate
   end
