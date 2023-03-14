@@ -1,6 +1,6 @@
 class Student
   attr_accessor :id, :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
-  def initialize(args = {})
+  def initialize(args = {last_name:'',first_name:''})
     @id = args[:id]
     @last_name = args[:last_name]
     @first_name = args[:first_name]
@@ -9,6 +9,9 @@ class Student
     @telegram = args[:telegram]
     @email = args[:email]
     @github = args[:github]
+
+    raise ArgumentError,'Фамилимя Имя - обязательные параметры' unless
+      @last_name&&@first_name
 
     validate
   end
