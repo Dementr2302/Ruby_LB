@@ -1,10 +1,25 @@
 require_relative 'Student_class.rb'
 
-student2 = Student.new({id:1, last_name:"Байрамов", first_name:"Дмитрий", father_name: "Дмитиревич", phone: "+7 928 260 48 86", telegram: "@dementr", email: "dementr@yandex.ru", github: "https://github.com/Dementr2302"})
-puts student2.get_info
 
-student1 = Student.new({id:1, first_name:"Дмитрий", father_name: "Дмитиревич",telegram: "@dementr" })
-puts student1.get_info
+student1 = Student.new({last_name: 'Иванов', first_name: 'Иван', email: 'ivanov@example.com', github: 'https://github.com/ivanov'})
+puts "Данные студента 1:"
+student1.get_info
+puts "Контактные данные студента 1 корректны" if student1.validate
+
+
+student2 = Student.new({last_name: 'Петров', first_name: 'Петр', phone: '+79001234567', telegram: '@petrov', email: 'petrov@example.com', github: 'https://github.com/petrov'})
+
+# создал классы исключений , чтоб ловить их )
+
+begin
+  student2.phone_err = '123'
+rescue PhoneError => e
+  puts "#{e.message}"
+end
+
+
+
+
 
 
 

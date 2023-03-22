@@ -1,5 +1,8 @@
+require_relative 'exceptions.rb'
+
 class Student
   attr_accessor :id, :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
+
   def initialize(args = {last_name:'',first_name:''})
     @id = args[:id]
     @last_name = args[:last_name]
@@ -10,41 +13,69 @@ class Student
     @email = args[:email]
     @github = args[:github]
 
-    raise ArgumentError,'Фамилимя Имя - обязательные параметры' unless
-      @last_name&&@first_name
+    raise ArgumentError, 'Фамилимя Имя - обязательные параметры' unless @last_name && @first_name
 
     validate
   end
+
   def get_info
     puts "Студент #{last_name} #{first_name} #{father_name}"
-    if telegram != nil
-      puts "Telegram: #{telegram}"
-    end
-    if phone != nil
-      puts "Телефон: #{phone}"
-    end
-    if email != nil
-      puts "Почта: #{email}"
-    end
-    if github != nil
-      puts "Github: #{github}"
-    end
+    puts "Telegram: #{telegram}" if telegram
+    puts "Телефон: #{phone}" if phone
+    puts "Почта: #{email}" if email
+    puts "Github: #{github}" if github
   end
-
   def validate
-    validate_contacts
-    validate_oun_contact
+    Student.validate_email(email)
+    Student.validate_telegram(telegram)
+    Student.validate_phone(phone)
+    Student.validate_github(github)
+    validate_other_contact
+
+  end
+  # увидел в интернетах , что будет круто написать свои классы исколючений наследующихся от базового 🙂
+  # не факт что прописал правильно но вроде прикольно
+
+  def self.validate_phone(phone)
+    return /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ === phone
+  end
+  def self.validate_github(github)
+    return /\Ahttps:\/\/github\.com\/\w+\z/ === github
+  end
+  def self.validate_telegram(telegram)
+    return /^@[A-Za-z\d_]{5,32}$/ === telegram
+  end
+  def self.validate_email(email)
+    return /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i === email
   end
 
-  def validate_contacts
-    raise "Номер телефона должен быть в формате +7 (XXX) XXX-XX-XX" if phone && phone !~ /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/
-    raise "Github должен быть в формате https://github.com/Dementr2302" if github && github !~ /\Ahttps:\/\/github\.com\/\w+\z/
-    raise "Telegram должен быть в формате @dementr" if telegram && telegram !~ /^@[A-Za-z\d_]{5,32}$/
-    raise "Почта должен быть в формате dementr@yandex.ru" if email && email !~ /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  def mail_err=(email)
+    raise EmailError unless Student.validate_email(email.to_s)
+    @email = email
   end
 
-  def validate_oun_contact
-    raise "Необходимо указать хотя бы один контакт для связи" unless phone || telegram || email
+  def git_err=(github)
+    raise GitError unless Student.validate_github(github.to_s)
+    @github = github
   end
+
+  def phone_err=(phone)
+    raise PhoneError unless Student.validate_phone(phone.to_s)
+    @phone = phone
+  end
+
+  def telegram_err=(telegram)
+    raise TelegramError unless Student.validate_telegram(telegram.to_s)
+    @telegram = telegram
+  end
+
+  def has_other_contact?
+    phone || telegram || email
+  end
+
+  def validate_other_contact
+    raise ContactError unless has_other_contact?
+  end
+
 
 end
