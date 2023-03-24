@@ -3,7 +3,7 @@ require_relative 'exceptions.rb'
 class Student
   attr_accessor :id, :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
 
-  def initialize(args = {last_name:'',first_name:''})
+  def initialize(args = { last_name: '', first_name: '' })
     @id = args[:id]
     @last_name = args[:last_name]
     @first_name = args[:first_name]
@@ -18,13 +18,10 @@ class Student
     validate
   end
 
-  def get_info
-    puts "Студент #{last_name} #{first_name} #{father_name}"
-    puts "Telegram: #{telegram}" if telegram
-    puts "Телефон: #{phone}" if phone
-    puts "Почта: #{email}" if email
-    puts "Github: #{github}" if github
+  def to_s
+    "ID: #{@id}\n Surname: #{@last_name}\n Name: #{@first_name}\n father_name: #{@father_name}\n Phone: #{@phone}\n Telegram: #{@telegram}\n Email: #{@email}\n Github: #{@github}"
   end
+
   def validate
     Student.validate_email(email)
     Student.validate_telegram(telegram)
@@ -33,18 +30,22 @@ class Student
     validate_other_contact
 
   end
+
   # увидел в интернетах , что будет круто написать свои классы исколючений наследующихся от базового 🙂
   # не факт что прописал правильно но вроде прикольно
 
   def self.validate_phone(phone)
     return /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ === phone
   end
+
   def self.validate_github(github)
     return /\Ahttps:\/\/github\.com\/\w+\z/ === github
   end
+
   def self.validate_telegram(telegram)
     return /^@[A-Za-z\d_]{5,32}$/ === telegram
   end
+
   def self.validate_email(email)
     return /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i === email
   end
@@ -76,6 +77,5 @@ class Student
   def validate_other_contact
     raise ContactError unless has_other_contact?
   end
-
 
 end
