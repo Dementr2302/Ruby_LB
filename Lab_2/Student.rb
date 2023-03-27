@@ -1,8 +1,7 @@
 require_relative 'exceptions.rb'
 
 class Student
-  attr_accessor :id, :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
-
+  attr_reader :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
   def initialize(args = { last_name: '', first_name: '' })
     @id = args[:id]
     @last_name = args[:last_name]
