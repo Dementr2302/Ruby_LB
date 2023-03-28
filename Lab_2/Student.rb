@@ -1,16 +1,16 @@
 require_relative 'exceptions.rb'
 
 class Student
-  attr_reader :last_name, :first_name, :father_name, :phone, :telegram, :email, :github
-  def initialize(args = { last_name: '', first_name: '' })
-    @id = args[:id]
-    @last_name = args[:last_name]
-    @first_name = args[:first_name]
-    @father_name = args[:father_name]
-    @phone = args[:phone]
-    @telegram = args[:telegram]
-    @email = args[:email]
-    @github = args[:github]
+  attr_accessor :last_name, :first_name, :father_name,:id, :phone, :telegram, :email, :github
+  def initialize(last_name, first_name, father_name, options = {})
+    self.last_name = last_name
+    self.first_name = first_name
+    self.father_name = father_name
+    self.id = options[:id]
+    self.phone = options[:phone]
+    self.telegram = options[:telegram]
+    self.email = options[:email]
+    self.github = options[:github]
 
     raise ArgumentError, 'Фамилимя Имя - обязательные параметры' unless @last_name && @first_name
 

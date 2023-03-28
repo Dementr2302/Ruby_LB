@@ -1,8 +1,8 @@
 require_relative 'Student.rb'
 
-student1 = Student.new({id:1, last_name: 'Иванов', first_name: 'Иван', email: 'ivanov@example.com', github: 'https://github.com/ivanov' })
+student4 = Student.new('Байрамов', 'Дмитрий', 'Дмитриевич', { id: 3, phone: '79990001122', telegram: '@dementr2302', email: 'dementr@gmail.com', github: 'http://guthub/dementr2302' })
 puts "Данные студента 1:"
-puts student1.to_s
+puts student4.to_s
 
 
 
