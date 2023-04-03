@@ -1,13 +1,13 @@
 require_relative 'Student.rb'
 
-student4 = Student.new('Байрамов', 'Дмитрий', 'Дмитриевич', { id: 3, phone: '79990001122', telegram: '@dementr2302', email: 'dementr@gmail.com', github: 'http://guthub/dementr2302' })
-puts "Данные студента 1:"
-puts student4.to_s
+
+student1 = Student.new('Иванов', 'Иван', 'Иванович', { id: 1, phone: '+7 (999) 123-45-67', telegram: '@ivanov', email: 'ivanov@example.com', github: 'https://github.com/ivanov' })
+puts student1.to_s
 
 
-
-
-
-
-
-
+begin
+  student4 = Student.new('Петров', 'Петр', 'Петрович', { phone: '+7 (999) 123-45-67',github: 'github.com/petrov' })
+  student4.phone_err = 'githutrov' # установка значения github с помощью нового метода
+rescue PhoneError => e
+  puts e.message
+end

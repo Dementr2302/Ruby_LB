@@ -1,5 +1,5 @@
 require_relative 'exceptions.rb'
-
+require 'json'
 class Student
   attr_accessor :last_name, :first_name, :father_name,:id, :phone, :telegram, :email, :github
   def initialize(last_name, first_name, father_name, options = {})
@@ -12,9 +12,26 @@ class Student
     self.email = options[:email]
     self.github = options[:github]
 
-    raise ArgumentError, 'Фамилимя Имя - обязательные параметры' unless @last_name && @first_name
+    raise ArgumentError, 'Фамилимя Имя - обязательные параметры' unless @last_name && @first_name && @father_name
 
     validate
+  end
+
+  def self.from_json_str(str)
+    params = JSON.parse(str)
+    required_params = %w[first_name last_name father_name]
+    raise ArgumentError, "Fields required: #{required_params.join(', ')}" unless required_params.all? { |p| params.key?(p) }
+
+    first_name, last_name, father_name = params.values_at('first_name', 'last_name', 'father_name')
+    Student.new(first_name, last_name, father_name, params.transform_keys(&:to_sym))
+  end
+  def to_json_str
+    attrs = {}
+    %i[last_name first_name father_name id phone telegram email git].each do |attr|
+      attr_val = send(attr)
+      attrs[attr] = attr_val unless attr_val.nil?
+    end
+    JSON.generate(attrs)
   end
 
   def to_s
@@ -27,11 +44,7 @@ class Student
     Student.validate_phone(phone)
     Student.validate_github(github)
     validate_other_contact
-
   end
-
-  # увидел в интернетах , что будет круто написать свои классы исколючений наследующихся от базового 🙂
-  # не факт что прописал правильно но вроде прикольно
 
   def self.validate_phone(phone)
     return /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ === phone
@@ -78,3 +91,4 @@ class Student
   end
 
 end
+

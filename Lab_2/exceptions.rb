@@ -1,4 +1,7 @@
 # мне кажется можно сделать лучше , но пока полежит так (тож прикольно)
+require_relative 'Student.rb'
+
+
 class InvalidValueError < StandardError
   def initialize(msg = 'Некорректное значение!')
     super
