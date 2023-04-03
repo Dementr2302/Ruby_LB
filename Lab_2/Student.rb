@@ -26,13 +26,34 @@ class Student
     Student.new(first_name, last_name, father_name, params.transform_keys(&:to_sym))
   end
   def to_json_str
-    attrs = {}
-    %i[last_name first_name father_name id phone telegram email git].each do |attr|
-      attr_val = send(attr)
-      attrs[attr] = attr_val unless attr_val.nil?
-    end
+    attrs = {
+      last_name: last_name,
+      first_name: first_name,
+      father_name: father_name,
+      id: id,
+      phone: phone,
+      telegram: telegram,
+      email: email,
+      git: git
+    }.reject { |_, v| v.nil? }
     JSON.generate(attrs)
   end
+  def short_contact
+    return "Telegram: #{telegram}" if telegram
+    return "Phone: #{phone}" if phone
+    return "Email: #{email}" if email
+
+    nil
+  end
+
+  def initials
+    "#{last_name} #{first_name[0]}. #{father_name[0]}."
+  end
+
+  def get_info
+    "#{initials}, #{short_contact}, Github: #{git}"
+  end
+
 
   def to_s
     "ID: #{@id}\n Surname: #{@last_name}\n Name: #{@first_name}\n father_name: #{@father_name}\n Phone: #{@phone}\n Telegram: #{@telegram}\n Email: #{@email}\n Github: #{@github}"
