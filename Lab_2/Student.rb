@@ -57,4 +57,3 @@ class Student < BaseStudent
     res
   end
 end
-

@@ -6,22 +6,22 @@ class BaseStudent
   attr_reader :phone, :email, :telegram
   attr_writer :id
 
-  def mail_err=(email)
+  def email=(email)
     raise EmailError unless Student.validate_email(email.to_s)
     @email = email
   end
 
-  def git_err=(git)
+  def git=(git)
     raise GitError unless Student.validate_git(git.to_s)
     @git = git
   end
 
-  def phone_err=(phone)
+  def phone=(phone)
     raise PhoneError unless Student.validate_phone(phone.to_s)
     @phone = phone
   end
 
-  def telegram_err=(telegram)
+  def telegram=(telegram)
     raise TelegramError unless Student.validate_telegram(telegram.to_s)
     @telegram = telegram
   end
