@@ -1,7 +1,6 @@
 class StudentShort
   attr_reader :id, :git, :contact, :short_name
 
-  # стандартный конструктор из строки
   def initialize(id, str)
     data = JSON.parse(str).transform_keys(&:to_sym)
     raise ArgumentError, 'Fields required: short_name' if !data.key?(:short_name) || data[:short_name].nil?
