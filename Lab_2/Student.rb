@@ -1,115 +1,60 @@
-require_relative 'exceptions.rb'
+require_relative 'base_student'
 require 'json'
-class Student
-  attr_accessor :last_name, :first_name, :father_name,:id, :phone, :telegram, :email, :github
-  def initialize(last_name, first_name, father_name, options = {})
-    self.last_name = last_name
-    self.first_name = first_name
-    self.father_name = father_name
-    self.id = options[:id]
-    self.phone = options[:phone]
-    self.telegram = options[:telegram]
-    self.email = options[:email]
-    self.github = options[:github]
 
-    raise ArgumentError, 'Фамилимя Имя - обязательные параметры' unless @last_name && @first_name && @father_name
+class Student < BaseStudent
+  public_class_method :new
+  attr_reader :first_name, :second_name, :last_name
 
-    validate
+  public :phone, :telegram, :email, 'id=',  'git=', :set_contacts
+  def initialize(last_name: nil, first_name: nil, second_name: nil, id: nil, phone:nil, telegram: nil, email: nil, git:nil)
+    raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil?|| last_name.nil?
+    self.last_name=last_name
+    self.first_name=first_name
+    self.second_name=second_name
+    super(id:id, phone:phone, telegram:telegram, email:email, git:git)
   end
 
   def self.from_json_str(str)
-    params = JSON.parse(str)
-    required_params = %w[first_name last_name father_name]
-    raise ArgumentError, "Fields required: #{required_params.join(', ')}" unless required_params.all? { |p| params.key?(p) }
-
-    first_name, last_name, father_name = params.values_at('first_name', 'last_name', 'father_name')
-    Student.new(first_name, last_name, father_name, params.transform_keys(&:to_sym))
-  end
-  def to_json_str
-    attrs = {
-      last_name: last_name,
-      first_name: first_name,
-      father_name: father_name,
-      id: id,
-      phone: phone,
-      telegram: telegram,
-      email: email,
-      git: git
-    }.reject { |_, v| v.nil? }
-    JSON.generate(attrs)
-  end
-  def short_contact
-    return "Telegram: #{telegram}" if telegram
-    return "Phone: #{phone}" if phone
-    return "Email: #{email}" if email
-
-    nil
+    data=JSON.parse(str).transform_keys(&:to_sym)
+    Student.new(**data)
   end
 
-  def initials
-    "#{last_name} #{first_name[0]}. #{father_name[0]}."
+  def first_name=(first_name)
+    raise ArgumentError, 'Invalid first_name!' unless first_name.nil? || Student.validate_name?(first_name)
+    @first_name=first_name
   end
 
+  def second_name=(second_name)
+    raise ArgumentError, 'Invalid second_name!' unless second_name.nil? || Student.validate_name?(second_name)
+    @second_name=second_name
+  end
+
+  def last_name=(last_name)
+    raise ArgumentError, 'Invalid last_name!' unless last_name.nil? || Student.validate_name?(last_name)
+    @last_name=last_name
+  end
+
+  def self.validate_name?(name)
+    name.match(/^[А-Я][а-я]+(-[А-Я][а-я]+)*$/)
+  end
+
+  def short_name
+    "#{last_name} #{first_name[0]}. #{second_name[0]}."
+  end
   def get_info
-    "#{initials}, #{short_contact}, Github: #{git}"
+    git_info = " git=#{git}" unless git.nil?
+    contact_info = "#{find_contact}" unless find_contact.nil?
+    "#{short_name} #{git_info} #{contact_info}"
   end
-
 
   def to_s
-    "ID: #{@id}\n Surname: #{@last_name}\n Name: #{@first_name}\n father_name: #{@father_name}\n Phone: #{@phone}\n Telegram: #{@telegram}\n Email: #{@email}\n Github: #{@github}"
+    res = "#{last_name} #{first_name} #{second_name}"
+    res += " id=#{id}" unless id.nil?
+    res += " phone=#{phone}" unless phone.nil?
+    res += " git=#{git}" unless git.nil?
+    res += " telegram=#{telegram}" unless telegram.nil?
+    res += " email=#{email}" unless email.nil?
+    res
   end
-
-  def validate
-    Student.validate_email(email)
-    Student.validate_telegram(telegram)
-    Student.validate_phone(phone)
-    Student.validate_github(github)
-    validate_other_contact
-  end
-
-  def self.validate_phone(phone)
-    return /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/ === phone
-  end
-
-  def self.validate_github(github)
-    return /\Ahttps:\/\/github\.com\/\w+\z/ === github
-  end
-
-  def self.validate_telegram(telegram)
-    return /^@[A-Za-z\d_]{5,32}$/ === telegram
-  end
-
-  def self.validate_email(email)
-    return /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i === email
-  end
-
-  def mail_err=(email)
-    raise EmailError unless Student.validate_email(email.to_s)
-    @email = email
-  end
-
-  def git_err=(github)
-    raise GitError unless Student.validate_github(github.to_s)
-    @github = github
-  end
-
-  def phone_err=(phone)
-    raise PhoneError unless Student.validate_phone(phone.to_s)
-    @phone = phone
-  end
-
-  def telegram_err=(telegram)
-    raise TelegramError unless Student.validate_telegram(telegram.to_s)
-    @telegram = telegram
-  end
-
-  def has_other_contact?
-    phone || telegram || email
-  end
-
-  def validate_other_contact
-    raise ContactError unless has_other_contact?
-  end
-
 end
 
