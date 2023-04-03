@@ -56,4 +56,13 @@ class Student < BaseStudent
     res += " email=#{email}" unless email.nil?
     res
   end
+
+  def to_json_str
+    attrs = {}
+    %i[last_name first_name father_name id phone telegram email git].each do |attr|
+      attr_val = send(attr)
+      attrs[attr] = attr_val unless attr_val.nil?
+    end
+    JSON.generate(attrs)
+  end
 end
