@@ -14,7 +14,9 @@ class StudentShort<BaseStudent
     @contact = data[:contact]
     @git = data[:git]
   end
-
+  def short_name
+    "#{last_name} #{first_name[0]}. #{second_name[0]}."
+  end
   def self.init_from_student(student)
     StudentShort.new(student.id,
                      JSON.generate({ "git": student.git, "short_name": student.short_name, "contact": student.contact}))
@@ -24,7 +26,7 @@ class StudentShort<BaseStudent
     result = short_name
     result += " id=#{id} " unless id.nil?
     result += " #{find_contact}"
-    result+= "  git=#{git}" unless git.nil?
+    result += "  git=#{git}" unless git.nil?
     result
   end
 end

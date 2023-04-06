@@ -38,9 +38,7 @@ class Student < BaseStudent
     name.match(/^[А-Я][а-я]+(-[А-Я][а-я]+)*$/)
   end
 
-  def short_name
-    "#{last_name} #{first_name[0]}. #{second_name[0]}."
-  end
+
   def get_info
     git_info = " git=#{git}" unless git.nil?
     contact_info = "#{find_contact}" unless find_contact.nil?
