@@ -69,7 +69,6 @@ class BaseStudent
     git? && exist_contact?
   end
 
-  # строка для вывода любого одного контакта
   def find_contact
     if exist_contact?
       return "phone: #{phone}" unless phone.nil?
