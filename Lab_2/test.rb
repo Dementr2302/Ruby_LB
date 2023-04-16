@@ -1,7 +1,7 @@
 require_relative 'student_list_txt'
 require_relative 'student_list_json'
 require_relative 'student_list_yaml'
-
+require_relative 'base_student_list'
 
 # a = StudentListTxt.new()
 # a.read_file("/Users/dmitrijbajramov/Desktop/Lab_2/Ruby_LB/Lab_2/student_list.txt")
@@ -16,8 +16,9 @@ list=[1,2,3]
 # a = StudentListJson.new()
 # a.read_file("/Users/dmitrijbajramov/Desktop/Lab_2/Ruby_LB/Lab_2/student_list.json")
 
-a = StudentListYaml.new()
-a.read_file("/Users/dmitrijbajramov/Desktop/Lab_2/Ruby_LB/Lab_2/student_list.yaml")
+# a = StudentListYaml.new()
+# a.read_file("/Users/dmitrijbajramov/Desktop/Lab_2/Ruby_LB/Lab_2/student_list.yaml")
+a = BaseStudentList.new(StudentListYaml.new)
 # puts a.students
 # a.sorted_by_name
 # a.write_to_file("/Users/dmitrijbajramov/Desktop/Lab_2/Ruby_LB/Lab_2/student_list_out.json")
