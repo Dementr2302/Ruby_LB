@@ -1,0 +1,24 @@
+[
+  {
+    "last_name": "Иванов",
+    "first_name": "Иван",
+    "second_name": "Иванович",
+    "email": "ivan@mail.ru",
+    "id": 1
+  },
+  {
+    "last_name": "Байрамов",
+    "first_name": "Дмитирй",
+    "second_name": "Дмитриевич",
+    "phone": "+79282604886",
+    "id": 2
+  },
+  {
+    "last_name": "Балаари",
+    "first_name": "Виталий",
+    "second_name": "Александрович",
+    "email": "balaari@yandex.ru",
+    "phone": "89282604886",
+    "id": 3
+  }
+]

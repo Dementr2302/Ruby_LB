@@ -5,39 +5,39 @@ class Student < BaseStudent
   public_class_method :new
   attr_reader :first_name, :second_name, :last_name
 
-  public :phone, :telegram, :email, 'id=',  'git=', :set_contacts
-  def initialize(last_name: nil, first_name: nil, second_name: nil, id: nil, phone:nil, telegram: nil, email: nil, git:nil)
-    raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil?|| last_name.nil?
-    self.last_name=last_name
-    self.first_name=first_name
-    self.second_name=second_name
-    super(id:id, phone:phone, telegram:telegram, email:email, git:git)
+  public :phone, :telegram, :email, 'id=', 'git=', :set_contacts
+
+  def initialize(last_name: nil, first_name: nil, second_name: nil, id: nil, phone: nil, telegram: nil, email: nil, git: nil)
+    raise ArgumentError, "Required fields: first_name, second_name and last_name!" if first_name.nil? || second_name.nil? || last_name.nil?
+    self.last_name = last_name
+    self.first_name = first_name
+    self.second_name = second_name
+    super(id: id, phone: phone, telegram: telegram, email: email, git: git)
   end
 
   def self.from_json_str(str)
-    data=JSON.parse(str).transform_keys(&:to_sym)
+    data = JSON.parse(str).transform_keys(&:to_sym)
     Student.new(**data)
   end
 
   def first_name=(first_name)
     raise ArgumentError, 'Invalid first_name!' unless first_name.nil? || Student.validate_name?(first_name)
-    @first_name=first_name
+    @first_name = first_name
   end
 
   def second_name=(second_name)
     raise ArgumentError, 'Invalid second_name!' unless second_name.nil? || Student.validate_name?(second_name)
-    @second_name=second_name
+    @second_name = second_name
   end
 
   def last_name=(last_name)
     raise ArgumentError, 'Invalid last_name!' unless last_name.nil? || Student.validate_name?(last_name)
-    @last_name=last_name
+    @last_name = last_name
   end
 
   def self.validate_name?(name)
     name.match(/^[А-Я][а-я]+(-[А-Я][а-я]+)*$/)
   end
-
 
   def get_info
     git_info = " git=#{git}" unless git.nil?
@@ -55,12 +55,4 @@ class Student < BaseStudent
     res
   end
 
-  def to_json_str
-    attrs = {}
-    %i[last_name first_name father_name id phone telegram email git].each do |attr|
-      attr_val = send(attr)
-      attrs[attr] = attr_val unless attr_val.nil?
-    end
-    JSON.generate(attrs)
-  end
 end
