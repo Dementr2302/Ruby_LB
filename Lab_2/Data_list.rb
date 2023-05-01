@@ -1,11 +1,10 @@
 require_relative 'Data_table'
-
 class DataList
-  attr_reader :obj_list, :selected_items
-
+  private_class_method :new
+  attr_writer :obj_list
   def initialize(obj_list)
-    self.obj_list = obj_list
-    self.selected_items = []
+    self.obj_list=obj_list
+    self.selected_items=[]
   end
 
   # выделение элементов по номеру
@@ -21,16 +20,24 @@ class DataList
   def get_names; end
 
   # получение таблицы
-  def get_data; end
+  # Паттерн Шаблон
+  def get_data
+    index_id=0
+    dt = obj_list.inject([]) do |res, object|
+      row=[index_id]
+      row.append(*get_fields(object))
+      index_id+=1
+      res<<row
+    end
+    DataTable.new(dt)
+  end
+  def replace_objects(obj_list)
+    self.obj_list=obj_list.dup
+  end
 
   protected
-
-  # obj_list геттер для доступа к списку объектов obj_list
-  # obj_list сеттер для установки списка объектов obj_list
-  attr_writer :obj_list
+  attr_reader :obj_list
   attr_accessor :selected_items
-
-  # Возвращает значения полей объекта object
   def get_fields(object)
     []
   end
