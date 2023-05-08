@@ -1,25 +1,34 @@
-require_relative 'Data_table'
+require_relative 'data_table'
 class DataList
   private_class_method :new
   attr_writer :obj_list
   def initialize(obj_list)
     self.obj_list=obj_list
     self.selected_items=[]
+    @observers = []
   end
 
-  # выделение элементов по номеру
+  #добавление наблюдателя
+  def add_observer(observer)
+    @observers.append(observer)
+  end
+
+  def notify
+    @observers.each { |observer| observer.on_datalist_changed(get_data) }
+  end
+  #выделение элементов по номеру
   def select(*numbers)
-    selected_items.concat(numbers)
+    selected_items.append(*numbers)
   end
 
-  # массив id выделенных элементов
+  #массив id выделенных элементов
   def get_select
-    obj_list.values_at(*selected_items).map(&:id)
+    obj_list[selected_items].id
   end
 
   def get_names; end
 
-  # получение таблицы
+  #получение таблицы
   # Паттерн Шаблон
   def get_data
     index_id=0
@@ -33,6 +42,7 @@ class DataList
   end
   def replace_objects(obj_list)
     self.obj_list=obj_list.dup
+    notify
   end
 
   protected
