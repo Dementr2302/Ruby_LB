@@ -1,4 +1,89 @@
-# Документация API
+---
+# Для разверки проекта
+---
+              
+ 
+### Создаем миграции на основе изменений моделей Django в приложениях проекта
+- python manage.py makemigrations
+
+### Применяем все непримененные миграции к базе данных
+- python manage.py migrate
+
+### Запускаем сервер разработки Django
+- python manage.py runserver
+
+---
+# Содержание
+---
+1. [CategoryDetail](#categorydetail)
+2. [CategoryFoodDetail](#categoryfooddetail)
+3. [FoodDetail](#fooddetail)
+4. [GameDetail](#gamedetail)
+5. [PersonalityDetail](#personalitydetail)
+6. [PetDetail](#petdetail)
+7. [PetPointsIncrease](#petpointsincrease)
+8. [PetPoints](#petpoints)
+9. [SkinDetail](#skindetail)
+10. [UserDetail](#userdetail)
+11. [UserEditBalance](#usereditbalance)
+12. [UserSetNick](#usersetnick)
+13. [UserStorageFoodDetail](#userstoragefooddetail)
+
+## CategoryDetail
+- Описание: Подробная информация о категории.
+- Свойства: id, category_name
+
+## CategoryFoodDetail
+- Описание: Подробная информация о связи категории с продуктами.
+- Свойства: category, food
+
+## FoodDetail
+- Описание: Подробная информация о продукте.
+- Свойства: id, name, price, saturation
+
+## GameDetail
+- Описание: Подробная информация об игре пользователя.
+- Свойства: id, points, user
+
+## PersonalityDetail
+- Описание: Подробная информация о характере.
+- Свойства: id, personality, category
+
+## PetDetail
+- Описание: Подробная информация о питомце.
+- Свойства: id, name, age, is_male, mood_points, purity_points, starvation_points, user, personality
+
+## PetPointsIncrease
+- Описание: Подробная информация о точке увеличения очков питомца.
+- Свойства: pet_id, characteristic, value
+
+## PetPoints
+- Описание: Подробная информация об очках питомца.
+- Свойства: mood_points, purity_points, starvation_points
+
+## SkinDetail
+- Описание: Подробная информация о скине.
+- Свойства: id, type, description, price
+
+## UserDetail
+- Описание: Подробная информация о пользователе.
+- Свойства: id, name, phone_number, created_at, balance
+
+## UserEditBalance
+- Описание: Подробная информация об изменении баланса пользователя.
+- Свойства: id, balance
+
+## UserSetNick
+- Описание: Подробная информация о никнейме пользователя.
+- Свойства: id, name
+
+## UserStorageFoodDetail
+- Описание: Подробная информация о продуктах, хранимых пользователем.
+- Свойства: id, count, user, food
+
+---
+# Запросы
+---
 
 ## Категории (Categories)
 
